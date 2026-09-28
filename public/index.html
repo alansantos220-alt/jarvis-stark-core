@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S. - Stark Holographic Core Ultimate</title>
+    <title>J.A.R.V.I.S. - Stark Holographic Core</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap');
 
@@ -11,7 +11,7 @@
             --emotion-color: #00f3ff;
             --emotion-glow: rgba(0, 243, 255, 0.8);
             --bg-deep: #010409;
-            --panel-bg: rgba(1, 15, 30, 0.9);
+            --panel-bg: rgba(1, 15, 30, 0.85);
         }
 
         body {
@@ -19,191 +19,244 @@
             color: var(--emotion-color);
             font-family: 'Share Tech Mono', monospace;
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        /* Reator Holográfico Superior */
+        .reactor-container {
+            position: relative;
+            width: 180px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
+        .arc-reactor {
+            width: 90px;
+            height: 90px;
+            border: 3px solid var(--emotion-color);
+            border-radius: 50%;
+            box-shadow: 0 0 25px var(--emotion-glow), inset 0 0 15px var(--emotion-glow);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse 3s infinite alternate;
+        }
+
+        .core {
+            width: 35px;
+            height: 35px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #fff, 0 0 40px var(--emotion-color);
+        }
+
+        .ring {
+            position: absolute;
+            width: 120px;
+            height: 30px;
+            border: 2px dashed var(--emotion-color);
+            border-radius: 50%;
+            bottom: -10px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 15px var(--emotion-glow); }
+            100% { transform: scale(1.05); box-shadow: 0 0 30px var(--emotion-color); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Painel Principal */
+        .main-panel {
+            width: 90%;
+            max-width: 950px;
             border: 2px solid var(--emotion-color);
-            box-shadow: 0 0 20px var(--emotion-glow);
+            box-shadow: 0 0 25px var(--emotion-glow);
             background: var(--panel-bg);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
-        .panel-section {
-            border: 1px dashed var(--emotion-color);
-            padding: 15px;
-            border-radius: 5px;
+        .header-status {
+            grid-column: span 2;
             display: flex;
-            flex-direction: column;
-            height: 450px;
-        }
-
-        .chat-box {
-            flex-grow: 1;
-            overflow-y: auto;
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            padding: 10px;
+            justify-content: space-between;
+            border-bottom: 1px dashed var(--emotion-color);
+            padding-bottom: 8px;
             margin-bottom: 10px;
-            background: rgba(0, 0, 0, 0.5);
+            font-family: 'Orbitron', sans-serif;
             font-size: 14px;
+        }
+
+        .section-box {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .message {
-            padding: 8px;
-            border-radius: 4px;
-        }
-
-        .message.user {
-            border-left: 3px solid #ff3333;
-            background: rgba(255, 51, 51, 0.1);
-        }
-
-        .message.jarvis {
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
             border-left: 3px solid var(--emotion-color);
-            background: rgba(0, 243, 255, 0.1);
+            padding-left: 8px;
+            letter-spacing: 1px;
         }
 
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex-grow: 1;
+        .input-box {
+            width: 100%;
             background: #000;
             border: 1px solid var(--emotion-color);
             color: var(--emotion-color);
-            padding: 10px;
+            padding: 12px;
             font-family: 'Share Tech Mono', monospace;
             border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        button {
-            background: rgba(0, 243, 255, 0.2);
+        .btn-stark {
+            background: rgba(0, 243, 255, 0.15);
             border: 1px solid var(--emotion-color);
             color: var(--emotion-color);
-            padding: 10px 15px;
+            padding: 12px;
             font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
             font-weight: bold;
+            cursor: pointer;
             border-radius: 4px;
             transition: 0.3s;
+            text-align: center;
         }
 
-        button:hover {
+        .btn-stark:hover {
             background: var(--emotion-color);
             color: #000;
-            box-shadow: 0 0 10px var(--emotion-glow);
+            box-shadow: 0 0 15px var(--emotion-glow);
         }
 
-        @media (max-width: 900px) {
-            .container {
+        .response-display {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            padding: 15px;
+            border-radius: 4px;
+            height: 160px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .info-row {
+            font-size: 13px;
+            color: #8ce3eb;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 800px) {
+            .main-panel {
                 grid-template-columns: 1fr;
+            }
+            .header-status {
+                grid-column: span 1;
             }
         }
     </style>
 </head>
 <body>
 
-    <h2>STARK INDUSTRIES // J.A.R.V.I.S. CLOUD CORE</h2>
+    <!-- REATOR HOLOGRÁFICO -->
+    <div class="reactor-container">
+        <div class="arc-reactor">
+            <div class="core"></div>
+        </div>
+        <div class="ring"></div>
+    </div>
 
-    <div class="container">
-        <!-- SEÇÃO 1: TERMINAL DE COMANDOS EXECUTIVOS -->
-        <div class="panel-section">
-            <h3>Terminal de Comandos</h3>
-            <div id="command-log" class="chat-box">
-                <div class="message jarvis">Terminal operacional pronto para receber ordens de sistema, senhor.</div>
-            </div>
-            <div class="input-group">
-                <input type="text" id="command-input" placeholder="Digite uma ordem ou comando...">
-                <button onclick="sendOrder('command')">EXECUTAR</button>
-            </div>
+    <!-- PAINEL TÁTICO -->
+    <div class="main-panel">
+        <div class="header-status">
+            <span>STARK INDUSTRIES // J.A.R.V.I.S. CLOUD CORE</span>
+            <span>ESTADO: ● NEUTRO / ESTÁVEL</span>
         </div>
 
-        <!-- SEÇÃO 2: MATRIZ DE CONVERSA EM TEMPO REAL -->
-        <div class="panel-section">
-            <h3>Matriz de Diálogo (IA)</h3>
-            <div id="chat-log" class="chat-box">
-                <div class="message jarvis">Olá, senhor. Como posso auxiliar nos nossos projetos hoje?</div>
-            </div>
-            <div class="input-group">
-                <input type="text" id="chat-input" placeholder="Converse com o J.A.R.V.I.S...." onkeypress="handleKeyPress(event)">
-                <button onclick="sendChat()">ENVIAR</button>
+        <!-- LADO ESQUERDO: TERMINAL DE COMANDO NUVEM -->
+        <div class="section-box">
+            <div class="section-title">TERMINAL DE COMANDO NUVEM</div>
+            <input type="text" id="command-input" class="input-box" placeholder="Digite sua ordem aqui..." onkeypress="handleKeyPress(event)">
+            <button class="btn-stark" onclick="sendToJarvis()">ENVIAR</button>
+            <button class="btn-stark" style="background: rgba(0,243,255,0.05); border-style: dashed;" onclick="toggleVoice()">ATIVAR COMANDO DE VOZ</button>
+            <div id="voice-status" style="font-size: 11px; color: #5ad1d9;">TRANSMISSÃO CONCLUÍDA</div>
+        </div>
+
+        <!-- LADO DIREITO: MATRIZ EMOCIONAL E LOGS -->
+        <div class="section-box">
+            <div class="section-title">MATRIZ EMOCIONAL E LOGS</div>
+            <div class="info-row">HUMOR ATIVO: <strong>NEUTRO / ESTÁVEL</strong></div>
+            <div class="info-row">STATUS DO PLAYER: <strong>STANDBY</strong></div>
+            <div class="section-title" style="margin-top: 5px;">RESPOSTA DO J.A.R.V.I.S.:</div>
+            <div id="response-output" class="response-display">
+                Sistemas operacionais a operar dentro dos parâmetros normais, senhor. Aguardando directivas.
             </div>
         </div>
     </div>
 
     <script>
-        async function processRequest(inputId, logId, type) {
-            const input = document.getElementById(inputId);
-            const log = document.getElementById(logId);
+        async function sendToJarvis() {
+            const input = document.getElementById('command-input');
+            const output = document.getElementById('response-output');
             const prompt = input.value.trim();
 
             if (!prompt) return;
 
-            // Adiciona mensagem do utilizador
-            log.innerHTML += `<div class="message user"><strong>${type === 'command' ? 'COMANDO' : 'SENHOR'}:</strong> ${prompt}</div>`;
+            output.innerHTML = "Processando comando no núcleo de inteligência, senhor...";
             input.value = '';
-            log.scrollTop = log.scrollHeight;
-
-            // Mensagem temporária de processamento
-            const loadingId = 'load-' + Date.now();
-            log.innerHTML += `<div id="${loadingId}" class="message jarvis">A processar dados nos servidores centrais, senhor...</div>`;
-            log.scrollTop = log.scrollHeight;
 
             try {
                 const response = await fetch('/api/jarvis', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt, type })
+                    body: JSON.stringify({ prompt })
                 });
 
                 const data = await response.json();
-                document.getElementById(loadingId).remove();
 
                 if (response.ok) {
-                    log.innerHTML += `<div class="message jarvis"><strong>J.A.R.V.I.S.:</strong> ${data.response}</div>`;
+                    output.innerHTML = `Comando recebido e processado com sucesso, senhor: "${prompt}".<br><br><strong>J.A.R.V.I.S.:</strong> ${data.response}`;
                 } else {
-                    log.innerHTML += `<div class="message jarvis" style="color: #ff3333;"><strong>ERRO:</strong> ${data.error || 'Falha de comunicação.'}</div>`;
+                    output.innerHTML = `ERRO: ${data.error || 'Falha ao processar comando.'}`;
                 }
             } catch (err) {
-                document.getElementById(loadingId).remove();
-                log.innerHTML += `<div class="message jarvis" style="color: #ff3333;"><strong>ERRO DE REDE:</strong> Servidor indisponível no momento.</div>`;
+                output.innerHTML = "ERRO DE REDE: Servidor indisponível ou falha de comunicação com a nuvem, senhor.";
             }
-            log.scrollTop = log.scrollHeight;
-        }
-
-        function sendOrder() {
-            processRequest('command-input', 'command-log', 'command');
-        }
-
-        function sendChat() {
-            processRequest('chat-input', 'chat-log', 'chat');
         }
 
         function handleKeyPress(e) {
             if (e.key === 'Enter') {
-                sendChat();
+                sendToJarvis();
             }
+        }
+
+        function toggleVoice() {
+            const status = document.getElementById('voice-status');
+            status.innerText = "OUVINDO COMANDO DE VOZ...";
+            setTimeout(() => {
+                status.innerText = "TRANSMISSÃO CONCLUÍDA";
+            }, 3000);
         }
     </script>
 </body>
