@@ -20,9 +20,9 @@ app.post('/api/jarvis', async (req, res) => {
             return res.status(400).json({ error: "Nenhum comando fornecido, senhor." });
         }
 
-        // Usa o modelo Gemini Flash para respostas rápidas e inteligentes
+        // Utiliza o modelo gemini-1.5-flash para máxima compatibilidade e rapidez
         const model = genAI.getGenerativeModel({ 
-            model: 'gemini-2.5-flash',
+            model: 'gemini-1.5-flash',
             systemInstruction: "Você é o J.A.R.V.I.S., o assistente de inteligência artificial avançado criado por Tony Stark. Responda sempre em português do Brasil, de forma prestativa, inteligente, sofisticada e técnica quando necessário, tratando o utilizador sempre por 'senhor'. Mantenha as respostas focadas em conversas de assistência."
         });
 
