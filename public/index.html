@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S. - Stark Holographic Core</title>
+    <title>J.A.R.V.I.S. - Stark Holographic Core Chat</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap');
 
         :root {
             --emotion-color: #00f3ff;
             --emotion-glow: rgba(0, 243, 255, 0.8);
-            --bg-deep: #010409;
-            --panel-bg: rgba(1, 15, 30, 0.85);
+            --bg-deep: #000205;
+            --panel-bg: rgba(1, 10, 20, 0.92);
         }
 
         body {
@@ -26,53 +26,58 @@
             justify-content: flex-start;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: color 0.5s ease;
         }
 
-        /* Reator Holográfico Superior */
-        .reactor-container {
+        /* Reator Holográfico com Reatividade Emocional */
+        .hologram-container {
             position: relative;
-            width: 180px;
-            height: 120px;
+            width: 260px;
+            height: 130px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             margin-bottom: 5px;
         }
 
         .arc-reactor {
-            width: 90px;
-            height: 90px;
-            border: 3px solid var(--emotion-color);
+            width: 85px;
+            height: 85px;
+            border: 4px solid var(--emotion-color);
             border-radius: 50%;
-            box-shadow: 0 0 25px var(--emotion-glow), inset 0 0 15px var(--emotion-glow);
+            box-shadow: 0 0 30px var(--emotion-glow), inset 0 0 15px var(--emotion-glow);
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             animation: pulse 3s infinite alternate;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
-        .core {
-            width: 35px;
-            height: 35px;
+        .core-center {
+            width: 26px;
+            height: 26px;
             background: #fff;
             border-radius: 50%;
             box-shadow: 0 0 20px #fff, 0 0 40px var(--emotion-color);
+            transition: box-shadow 0.5s ease;
         }
 
-        .ring {
-            position: absolute;
+        .base-beam {
             width: 120px;
-            height: 30px;
+            height: 18px;
             border: 2px dashed var(--emotion-color);
             border-radius: 50%;
-            bottom: -10px;
-            animation: rotate 10s linear infinite;
+            margin-top: 6px;
+            box-shadow: 0 0 12px var(--emotion-glow);
+            animation: rotate 12s linear infinite;
+            transition: border-color 0.5s ease;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 15px var(--emotion-glow); }
-            100% { transform: scale(1.05); box-shadow: 0 0 30px var(--emotion-color); }
+            0% { transform: scale(0.95); box-shadow: 0 0 18px var(--emotion-glow); }
+            100% { transform: scale(1.05); box-shadow: 0 0 35px var(--emotion-color); }
         }
 
         @keyframes rotate {
@@ -82,16 +87,17 @@
 
         /* Painel Principal */
         .main-panel {
-            width: 90%;
+            width: 95%;
             max-width: 950px;
             border: 2px solid var(--emotion-color);
-            box-shadow: 0 0 25px var(--emotion-glow);
+            box-shadow: 0 0 30px var(--emotion-glow);
             background: var(--panel-bg);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .header-status {
@@ -100,9 +106,10 @@
             justify-content: space-between;
             border-bottom: 1px dashed var(--emotion-color);
             padding-bottom: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
+            letter-spacing: 1px;
         }
 
         .section-box {
@@ -113,10 +120,12 @@
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             border-left: 3px solid var(--emotion-color);
             padding-left: 8px;
             letter-spacing: 1px;
+            margin-top: 2px;
+            transition: border-color 0.5s ease;
         }
 
         .input-box {
@@ -124,47 +133,81 @@
             background: #000;
             border: 1px solid var(--emotion-color);
             color: var(--emotion-color);
-            padding: 12px;
+            padding: 11px;
             font-family: 'Share Tech Mono', monospace;
             border-radius: 4px;
             box-sizing: border-box;
             outline: none;
+            font-size: 13px;
         }
 
         .btn-stark {
             background: rgba(0, 243, 255, 0.15);
             border: 1px solid var(--emotion-color);
             color: var(--emotion-color);
-            padding: 12px;
+            padding: 11px;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
             transition: 0.3s;
             text-align: center;
+            letter-spacing: 1px;
+            font-size: 12px;
         }
 
         .btn-stark:hover {
             background: var(--emotion-color);
             color: #000;
-            box-shadow: 0 0 15px var(--emotion-glow);
+            box-shadow: 0 0 20px var(--emotion-glow);
         }
 
-        .response-display {
-            background: rgba(0, 0, 0, 0.6);
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* Caixa de Chat Histórico */
+        .chat-history {
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(0, 243, 255, 0.4);
-            padding: 15px;
+            padding: 12px;
             border-radius: 4px;
-            height: 160px;
+            height: 260px;
             overflow-y: auto;
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 13px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message {
+            padding: 8px 10px;
+            border-radius: 4px;
+            max-width: 90%;
+            word-break: break-word;
+        }
+
+        .chat-user {
+            background: rgba(0, 243, 255, 0.1);
+            border-left: 3px solid var(--emotion-color);
+            align-self: flex-end;
+            color: #fff;
+        }
+
+        .chat-jarvis {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid #7000ff;
+            align-self: flex-start;
+            color: #c0e8ff;
         }
 
         .info-row {
-            font-size: 13px;
+            font-size: 12px;
             color: #8ce3eb;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
         }
 
         @media (max-width: 800px) {
@@ -174,56 +217,109 @@
             .header-status {
                 grid-column: span 1;
             }
+            .chat-history {
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- REATOR HOLOGRÁFICO -->
-    <div class="reactor-container">
-        <div class="arc-reactor">
-            <div class="core"></div>
+    <div class="hologram-container">
+        <div class="arc-reactor" id="reactor-ring">
+            <div class="core-center" id="reactor-core"></div>
         </div>
-        <div class="ring"></div>
+        <div class="base-beam" id="reactor-beam"></div>
     </div>
 
-    <!-- PAINEL TÁTICO -->
-    <div class="main-panel">
+    <!-- PAINEL TÁTICO UNIFICADO COM CHAT -->
+    <div class="main-panel" id="main-panel-box">
         <div class="header-status">
             <span>STARK INDUSTRIES // J.A.R.V.I.S. CLOUD CORE</span>
-            <span>ESTADO: ● NEUTRO / ESTÁVEL</span>
+            <span id="header-emotion-text">ESTADO: ● NEUTRO / ESTÁVEL</span>
         </div>
 
-        <!-- LADO ESQUERDO: TERMINAL DE COMANDO NUVEM -->
+        <!-- LADO ESQUERDO: CHAT LIVRE E CONTROLOS DE MÚSICA -->
         <div class="section-box">
-            <div class="section-title">TERMINAL DE COMANDO NUVEM</div>
-            <input type="text" id="command-input" class="input-box" placeholder="Digite sua ordem aqui..." onkeypress="handleKeyPress(event)">
-            <button class="btn-stark" onclick="sendToJarvis()">ENVIAR</button>
-            <button class="btn-stark" style="background: rgba(0,243,255,0.05); border-style: dashed;" onclick="toggleVoice()">ATIVAR COMANDO DE VOZ</button>
-            <div id="voice-status" style="font-size: 11px; color: #5ad1d9;">TRANSMISSÃO CONCLUÍDA</div>
-        </div>
-
-        <!-- LADO DIREITO: MATRIZ EMOCIONAL E LOGS -->
-        <div class="section-box">
-            <div class="section-title">MATRIZ EMOCIONAL E LOGS</div>
-            <div class="info-row">HUMOR ATIVO: <strong>NEUTRO / ESTÁVEL</strong></div>
-            <div class="info-row">STATUS DO PLAYER: <strong>STANDBY</strong></div>
-            <div class="section-title" style="margin-top: 5px;">RESPOSTA DO J.A.R.V.I.S.:</div>
-            <div id="response-output" class="response-display">
-                Sistemas operacionais a operar dentro dos parâmetros normais, senhor. Aguardando directivas.
+            <div class="section-title">TERMINAL DE CHAT NUVEM</div>
+            <input type="text" id="command-input" class="input-box" placeholder="Converse livremente com o J.A.R.V.I.S...." onkeypress="handleKeyPress(event)">
+            <button class="btn-stark" onclick="sendToJarvis()">ENVIAR MENSAGEM</button>
+            
+            <div class="section-title">CONTROLO DE PLAYER / MÚSICA (ROBÔ)</div>
+            <input type="text" id="music-input" class="input-box" placeholder="Cole o link da música (YouTube/Spotify)...">
+            <div class="btn-group">
+                <button class="btn-stark" onclick="sendMusic('play')">TOCAR / ENVIAR</button>
+                <button class="btn-stark" onclick="sendMusic('skip')">AVANÇAR / TROCAR</button>
             </div>
+        </div>
+
+        <!-- LADO DIREITO: HISTÓRICO DE DIÁLOGO E MATRIZ EMOCIONAL -->
+        <div class="section-box">
+            <div class="section-title">MATRIZ EMOCIONAL & DIÁLOGO</div>
+            <div class="info-row">HUMOR ATIVO: <strong id="active-mood">NEUTRO / ESTÁVEL</strong></div>
+            <div class="info-row" id="player-status">STATUS DO PLAYER: <strong>STANDBY</strong></div>
+            
+            <div class="section-title" style="margin-top: 2px;">REGISTO DE CONVERSA:</div>
+            <div id="chat-container" class="chat-history">
+                <div class="chat-message chat-jarvis">
+                    <strong>J.A.R.V.I.S.:</strong> Sistemas online, senhor. Como posso ajudar na nossa conversa ou nas directivas de hoje?
+                </div>
+            </div>
+            
+            <button class="btn-stark" style="background: rgba(0,243,255,0.05); border-style: dashed; padding: 8px;" onclick="toggleVoice()">ATIVAR COMANDO DE VOZ</button>
+            <div id="voice-status" style="font-size: 11px; color: #5ad1d9;">TRANSMISSÃO CONCLUÍDA</div>
         </div>
     </div>
 
     <script>
+        // Sistema de Dinâmica Emocional e Cores Holográficas
+        function updateEmotionalState(emotion) {
+            const root = document.documentElement;
+            let color = '#00f3ff';
+            let glow = 'rgba(0, 243, 255, 0.8)';
+            let moodText = 'NEUTRO / ESTÁVEL';
+
+            const em = emotion ? emotion.toLowerCase() : 'neutro';
+
+            if (em.includes('alerta') || em.includes('perigo') || em.includes('raiva')) {
+                color = '#ff3333';
+                glow = 'rgba(255, 51, 51, 0.8)';
+                moodText = 'ALERTA / HOSTIL';
+            } else if (em.includes('alegre') || em.includes('sucesso') || em.includes('otimista')) {
+                color = '#33ff66';
+                glow = 'rgba(51, 255, 102, 0.8)';
+                moodText = 'OTIMISTA / EFICIENTE';
+            } else if (em.includes('analítico') || em.includes('foco') || em.includes('pensativo')) {
+                color = '#cca6ff';
+                glow = 'rgba(204, 166, 255, 0.8)';
+                moodText = 'ANÁLISE PROFUNDA';
+            }
+
+            root.style.setProperty('--emotion-color', color);
+            root.style.setProperty('--emotion-glow', glow);
+            document.getElementById('active-mood').innerText = moodText;
+            document.getElementById('header-emotion-text').innerText = `ESTADO: ● ${moodText}`;
+        }
+
+        // Adiciona mensagens formatadas ao Chat
+        function appendToChat(sender, text, isUser = false) {
+            const chatContainer = document.getElementById('chat-container');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-message ${isUser ? 'chat-user' : 'chat-jarvis'}`;
+            msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
         async function sendToJarvis() {
             const input = document.getElementById('command-input');
-            const output = document.getElementById('response-output');
             const prompt = input.value.trim();
 
             if (!prompt) return;
 
-            output.innerHTML = "Processando comando no núcleo de inteligência, senhor...";
+            // Mostra a mensagem do utilizador no chat
+            appendToChat('Senhor', prompt, true);
             input.value = '';
 
             try {
@@ -236,12 +332,61 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    output.innerHTML = `Comando recebido e processado com sucesso, senhor: "${prompt}".<br><br><strong>J.A.R.V.I.S.:</strong> ${data.response}`;
+                    appendToChat('J.A.R.V.I.S.', data.response, false);
+                    
+                    // Modifica emoção com base no conteúdo da resposta
+                    const respLower = data.response.toLowerCase();
+                    if (respLower.includes('atenção') || respLower.includes('cuidado') || respLower.includes('erro')) {
+                        updateEmotionalState('alerta');
+                    } else if (respLower.includes('excelente') || respLower.includes('perfeito') || respLower.includes('ótimo')) {
+                        updateEmotionalState('alegre');
+                    } else {
+                        updateEmotionalState('neutro');
+                    }
                 } else {
-                    output.innerHTML = `ERRO: ${data.error || 'Falha ao processar comando.'}`;
+                    appendToChat('J.A.R.V.I.S.', `ERRO DO SISTEMA: ${data.error || 'Falha na matriz de processamento.'}`, false);
+                    updateEmotionalState('alerta');
                 }
             } catch (err) {
-                output.innerHTML = "ERRO DE REDE: Servidor indisponível ou falha de comunicação com a nuvem, senhor.";
+                appendToChat('J.A.R.V.I.S.', 'ERRO DE REDE: Ligação com a nuvem Stark interrompida, senhor.', false);
+                updateEmotionalState('alerta');
+            }
+        }
+
+        async function sendMusic(action) {
+            const musicInput = document.getElementById('music-input');
+            const playerStatus = document.getElementById('player-status');
+            const link = musicInput.value.trim();
+
+            if (action === 'play' && !link) {
+                appendToChat('J.A.R.V.I.S.', 'Por favor, insira um link de música válido para o robô executar, senhor.', false);
+                updateEmotionalState('alerta');
+                return;
+            }
+
+            let promptText = action === 'play' ? `Tocar música do link: ${link}` : `Avançar para a próxima música / trocar faixa no robô.`;
+            
+            if (action === 'play') {
+                playerStatus.innerHTML = `STATUS DO PLAYER: <strong>A REPRODUZIR</strong>`;
+                appendToChat('Senhor', `[Música] Tocar link: ${link}`, true);
+                appendToChat('J.A.R.V.I.S.', 'Ligando ao link de áudio e transmitindo para o robô, senhor.', false);
+                musicInput.value = '';
+                updateEmotionalState('alegre');
+            } else {
+                playerStatus.innerHTML = `STATUS DO PLAYER: <strong>FAIXA SEGUINTE</strong>`;
+                appendToChat('Senhor', '[Música] Avançar / Trocar faixa', true);
+                appendToChat('J.A.R.V.I.S.', 'Comando de salto executado. A avançar para a próxima faixa no robô, senhor.', false);
+                updateEmotionalState('analítico');
+            }
+
+            try {
+                await fetch('/api/jarvis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptText })
+                });
+            } catch (err) {
+                // Silencia erro de rede auxiliar do player
             }
         }
 
@@ -254,8 +399,10 @@
         function toggleVoice() {
             const status = document.getElementById('voice-status');
             status.innerText = "OUVINDO COMANDO DE VOZ...";
+            updateEmotionalState('analítico');
             setTimeout(() => {
                 status.innerText = "TRANSMISSÃO CONCLUÍDA";
+                updateEmotionalState('neutro');
             }, 3000);
         }
     </script>
