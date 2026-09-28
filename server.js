@@ -1,17 +1,17 @@
 const express = require('express');
 const path = require('path');
-const { GoogleGenAI } = require('@google/genai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Inicializa o cliente do Gemini (ele vai buscar a chave GEMINI_API_KEY configurada no Render)
-const ai = new GoogleGenAI();
+// Inicializa a IA com a chave de ambiente do Render
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rota da API para conversar com o J.A.R.V.I.S. em tempo real
+// Rota da API do J.A.R.V.I.S. em tempo real
 app.post('/api/jarvis', async (req, res) => {
     try {
         const { prompt } = req.body;
@@ -20,25 +20,20 @@ app.post('/api/jarvis', async (req, res) => {
             return res.status(400).json({ error: "Nenhum comando fornecido, senhor." });
         }
 
-        // Instrução de sistema para moldar a personalidade do assistente como o J.A.R.V.I.S.
-        const systemInstruction = "Você é o J.A.R.V.I.S., o assistente de inteligência artificial avançado criado por Tony Stark. Responda sempre em português do Brasil, de forma prestativa, inteligente, ligeiramente sofisticada ou técnica quando necessário, e trate o utilizador sempre por 'senhor'. Mantenha as respostas concisas e naturais para conversas de voz.";
-
-        // Chamada ao modelo Gemini em tempo real
-        const response = await ai.models.generateContent({
+        // Usa o modelo Gemini Flash para respostas rápidas e inteligentes
+        const model = genAI.getGenerativeModel({ 
             model: 'gemini-2.5-flash',
-            contents: [prompt],
-            config: {
-                systemInstruction: systemInstruction,
-                temperature: 0.7,
-            }
+            systemInstruction: "Você é o J.A.R.V.I.S., o assistente de inteligência artificial avançado criado por Tony Stark. Responda sempre em português do Brasil, de forma prestativa, inteligente, sofisticada e técnica quando necessário, tratando o utilizador sempre por 'senhor'. Mantenha as respostas focadas em conversas de assistência."
         });
 
-        const respostaTexto = response.text || "Sistemas operacionais ativos, mas não recebi dados de retorno, senhor.";
-        res.json({ response: respostaTexto });
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text() || "Sistemas ativos, mas sem retorno de dados, senhor.";
+
+        res.json({ response: responseText });
 
     } catch (err) {
-        console.error("Erro na API do Gemini:", err);
-        res.status(500).json({ error: "Falha ao consultar o núcleo de inteligência, senhor." });
+        console.error("Erro na API:", err);
+        res.status(500).json({ error: "Falha ao processar o núcleo de inteligência, senhor." });
     }
 });
 
