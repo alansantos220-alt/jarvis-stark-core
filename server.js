@@ -5,11 +5,9 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // se o HTML estiver na pasta public
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Inicializa o Gemini
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post('/api/jarvis', async (req, res) => {
@@ -24,20 +22,17 @@ app.post('/api/jarvis', async (req, res) => {
       return res.status(500).json({ error: 'Chave GEMINI_API_KEY não configurada no servidor.' });
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-    const systemInstruction = `
-Você é o J.A.R.V.I.S., a inteligência artificial criada por Tony Stark.
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-1.5-flash',
+      systemInstruction: `Você é o J.A.R.V.I.S., a inteligência artificial criada por Tony Stark.
 Fale sempre em português do Brasil, de forma educada, formal e com personalidade de mordomo britânico.
 Chame o usuário de "senhor".
 Seja conciso, inteligente e útil.
-Nunca diga que é um modelo de linguagem da Google.
-`;
+Nunca diga que é um modelo de linguagem da Google.`
+    });
 
-    const result = await model.generateContent([
-      { role: 'user', parts: [{ text: systemInstruction + '\n\nComando do senhor: ' + prompt }] }
-    ]);
-
+    // Forma CORRETA de enviar a mensagem
+    const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
 
@@ -51,7 +46,6 @@ Nunca diga que é um modelo de linguagem da Google.
   }
 });
 
-// Rota fallback (serve o index.html)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
