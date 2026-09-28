@@ -5,25 +5,24 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Inicializa a IA com a chave de ambiente do Render
+// Inicializa a IA com a chave de ambiente configurada no Render
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rota da API do J.A.R.V.I.S. em tempo real
+// Rota unificada de inteligência e comandos do J.A.R.V.I.S.
 app.post('/api/jarvis', async (req, res) => {
     try {
-        const { prompt } = req.body;
+        const { prompt, type } = req.body;
         
         if (!prompt) {
             return res.status(400).json({ error: "Nenhum comando fornecido, senhor." });
         }
 
-        // Utiliza o modelo gemini-1.5-flash para máxima compatibilidade e rapidez
         const model = genAI.getGenerativeModel({ 
             model: 'gemini-1.5-flash',
-            systemInstruction: "Você é o J.A.R.V.I.S., o assistente de inteligência artificial avançado criado por Tony Stark. Responda sempre em português do Brasil, de forma prestativa, inteligente, sofisticada e técnica quando necessário, tratando o utilizador sempre por 'senhor'. Mantenha as respostas focadas em conversas de assistência."
+            systemInstruction: "Você é o J.A.R.V.I.S., o assistente de inteligência artificial avançado criado por Tony Stark. Responda sempre em português do Brasil, de forma prestativa, inteligente, sofisticada e técnica quando necessário, tratando o utilizador sempre por 'senhor'. Se for um comando de terminal, execute o raciocínio técnico. Se for conversa, mantenha o diálogo fluido."
         });
 
         const result = await model.generateContent(prompt);
