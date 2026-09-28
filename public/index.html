@@ -161,18 +161,6 @@
             z-index: 4;
         }
 
-        .holo-emitter-base::before {
-            content: '';
-            position: absolute;
-            width: 210px;
-            height: 28px;
-            border: 1px dashed var(--emotion-color);
-            border-radius: 50%;
-            animation: spin-ring 12s linear infinite;
-        }
-
-        @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
         .hud-panel {
             background: var(--panel-bg);
             border: 2px solid var(--emotion-color);
