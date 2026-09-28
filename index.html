@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. - Stark Holographic Core Ultimate</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --emotion-color: #00f3ff;
+            --emotion-glow: rgba(0, 243, 255, 0.8);
+            --bg-deep: #010409;
+            --panel-bg: rgba(1, 15, 30, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--emotion-color);
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(0, 119, 255, 0.12) 0%, transparent 60%),
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .stark-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .holo-projector-stage {
+            position: relative;
+            height: 310px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 5px;
+        }
+
+        .iron-bust-hologram {
+            width: 160px;
+            height: 180px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: float-holo 4s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 18px var(--emotion-glow));
+        }
+
+        .helmet-shape {
+            width: 100px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(0,243,255,0.2) 0%, rgba(1,20,40,0.95) 100%);
+            border: 2px solid var(--emotion-color);
+            border-radius: 45px 45px 30px 30px;
+            position: relative;
+            box-shadow: 0 0 25px var(--emotion-glow), inset 0 0 15px var(--emotion-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .helmet-eyes {
+            position: absolute;
+            top: 38px;
+            width: 60px;
+            height: 10px;
+            background: #ffffff;
+            box-shadow: 0 0 15px #fff, 0 0 25px var(--emotion-color);
+            clip-path: polygon(0 40%, 50% 0%, 100% 40%, 90% 100%, 10% 100%);
+        }
+
+        .helmet-mouth {
+            position: absolute;
+            bottom: 18px;
+            width: 22px;
+            height: 4px;
+            background: var(--emotion-color);
+            border-radius: 2px;
+            box-shadow: 0 0 8px var(--emotion-color);
+            transition: all 0.1s ease;
+        }
+
+        .speaking .helmet-mouth {
+            animation: mouth-move 0.16s infinite alternate ease-in-out;
+        }
+
+        @keyframes mouth-move {
+            0% { width: 14px; height: 3px; box-shadow: 0 0 5px var(--emotion-color); }
+            100% { width: 40px; height: 11px; background: #ffffff; box-shadow: 0 0 20px #fff, 0 0 30px var(--emotion-color); }
+        }
+
+        .arc-reactor-chest {
+            width: 110px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(0,243,255,0.3) 0%, rgba(1,15,30,0.9) 80%);
+            border: 2px solid var(--emotion-color);
+            border-radius: 0 0 40px 40px;
+            margin-top: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px var(--emotion-color);
+        }
+
+        .arc-core {
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 18px #fff, 0 0 30px var(--emotion-color);
+            animation: pulse-core 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-core {
+            0% { transform: scale(0.85); opacity: 0.7; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
+
+        @keyframes float-holo {
+            0% { transform: translateY(0px) scale(0.98); opacity: 0.85; }
+            100% { transform: translateY(-10px) scale(1.02); opacity: 1; }
+        }
+
+        .holo-light-beam {
+            position: absolute;
+            bottom: 25px;
+            width: 280px;
+            height: 150px;
+            background: linear-gradient(to top, var(--emotion-glow), rgba(0, 243, 255, 0.0));
+            clip-path: polygon(25% 100%, 75% 100%, 100% 0%, 0% 0%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .holo-emitter-base {
+            position: relative;
+            width: 250px;
+            height: 40px;
+            border: 2px solid var(--emotion-color);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,243,255,0.2) 0%, rgba(1,4,9,0.9) 70%);
+            box-shadow: 0 0 25px var(--emotion-glow), inset 0 0 12px var(--emotion-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            z-index: 4;
+        }
+
+        .holo-emitter-base::before {
+            content: '';
+            position: absolute;
+            width: 210px;
+            height: 28px;
+            border: 1px dashed var(--emotion-color);
+            border-radius: 50%;
+            animation: spin-ring 12s linear infinite;
+        }
+
+        @keyframes spin-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hud-panel {
+            background: var(--panel-bg);
+            border: 2px solid var(--emotion-color);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 0 35px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(8px);
+        }
+
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed var(--emotion-color);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--emotion-color);
+        }
+
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) { .hud-grid { grid-template-columns: 1fr; } }
+
+        .hud-box {
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 14px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .hud-box::before {
+            content: attr(data-title);
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: var(--bg-deep);
+            padding: 0 6px;
+            font-size: 10px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+            color: var(--emotion-color);
+            border: 1px solid var(--emotion-color);
+            border-radius: 3px;
+        }
+
+        .stark-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--emotion-color);
+            color: #fff;
+            border-radius: 5px;
+            font-family: 'Share Tech Mono', monospace;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+
+        .stark-button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid var(--emotion-color);
+            font-size: 12px;
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(0, 243, 255, 0.15);
+            color: var(--emotion-color);
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+        }
+
+        .stark-button:hover {
+            background: var(--emotion-color);
+            color: var(--bg-deep);
+            box-shadow: 0 0 20px var(--emotion-color);
+        }
+
+        #statusText {
+            font-weight: bold;
+            color: var(--emotion-color);
+            font-size: 11px;
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #responseLog {
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px dashed rgba(0, 243, 255, 0.4);
+            padding: 10px;
+            border-radius: 6px;
+            min-height: 75px;
+            max-height: 110px;
+            overflow-y: auto;
+            font-size: 12px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+
+        .telemetry-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 11px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            padding-bottom: 4px;
+        }
+
+        .telemetry-val {
+            color: var(--emotion-color);
+            font-weight: bold;
+        }
+
+        .core-indicator {
+            width: 9px;
+            height: 9px;
+            background: var(--emotion-color);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--emotion-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stark-container">
+        
+        <div class="holo-projector-stage">
+            <div class="holo-light-beam"></div>
+            <div class="iron-bust-hologram" id="ironBust">
+                <div class="helmet-shape">
+                    <div class="helmet-eyes" id="helmetEyes"></div>
+                    <div class="helmet-mouth"></div>
+                </div>
+                <div class="arc-reactor-chest">
+                    <div class="arc-core"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="holo-emitter-base"></div>
+
+        <div class="hud-panel">
+            <div class="hud-header">
+                <div>STARK INDUSTRIES // J.A.R.V.I.S. CLOUD CORE</div>
+                <div>ESTADO: <span class="core-indicator"></span> <span id="emotionDisplay">NEUTRO / CALMO</span></div>
+            </div>
+
+            <div class="hud-grid">
+                <div class="hud-box" data-title="TERMINAL DE COMANDO NUVEM">
+                    <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+                        <input type="text" id="textPromptInput" class="stark-input" placeholder="Digite sua ordem aqui..." style="margin-bottom:0;" onkeypress="if(event.key === 'Enter') processarMensagem(document.getElementById('textPromptInput').value)">
+                        <button class="stark-button" style="width: 75px; margin:0;" onclick="processarMensagem(document.getElementById('textPromptInput').value)">Enviar</button>
+                    </div>
+
+                    <button class="stark-button" onclick="ativarReconhecimentoVoz()">Ativar Comando de Voz</button>
+                    <div id="statusText">CONEXÃO COM SERVIDOR ESTABELECIDA</div>
+                </div>
+
+                <div class="hud-box" data-title="MATRIZ EMOCIONAL E LOGS">
+                    <div class="telemetry-item">
+                        <span>HUMOR ATIVO:</span>
+                        <span class="telemetry-val" id="moodVal">STANDBY</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span>STATUS DO PLAYER:</span>
+                        <span class="telemetry-val" id="speechStateVal">AGUARDANDO</span>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 11px; color: var(--emotion-color);">RESPOSTA DO J.A.R.V.I.S.:</div>
+                    <div id="responseLog">Sistemas operacionais conectados na nuvem, senhor. Pronto para interagir.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let jarvisVoice = null;
+
+        function carregarVozJarvis() {
+            const voices = window.speechSynthesis.getVoices();
+            jarvisVoice = voices.find(v => (v.lang === 'pt-BR' || v.lang.includes('pt')) && (v.name.includes('Google') || v.name.includes('Daniel') || v.name.includes('Antônio') || v.name.toLowerCase().includes('male'))) || voices.find(v => v.lang.includes('pt'));
+        }
+
+        window.speechSynthesis.onvoiceschanged = carregarVozJarvis;
+        carregarVozJarvis();
+
+        function aplicarEmocao(emocao) {
+            const root = document.documentElement;
+            let cor = "#00f3ff"; 
+            let textoEmocao = "CALMO / ANÁLISE";
+
+            switch(emocao) {
+                case 'sucesso':
+                    cor = "#00ff66";
+                    textoEmocao = "SISTEMA OTIMIZADO / AMIGÁVEL";
+                    break;
+                case 'alerta':
+                    cor = "#ff0033";
+                    textoEmocao = "ALERTA MÁXIMO / PERIGO";
+                    break;
+                case 'pensativo':
+                    cor = "#9900ff";
+                    textoEmocao = "PROCESSAMENTO COMPLEXO";
+                    break;
+                case 'sarcasmo':
+                    cor = "#ffaa00";
+                    textoEmocao = "SARCASMO TÉCNICO STARK";
+                    break;
+                default:
+                    cor = "#00f3ff";
+                    textoEmocao = "NEUTRO / ESTÁVEL";
+            }
+
+            root.style.setProperty('--emotion-color', cor);
+            root.style.setProperty('--emotion-glow', cor + 'bb');
+            document.getElementById('emotionDisplay').innerText = textoEmocao;
+            document.getElementById('moodVal').innerText = textoEmocao;
+        }
+
+        function detectarEmocaoNoTexto(texto) {
+            const t = texto.toLowerCase();
+            if (t.includes('perigo') || t.includes('cuidado') || t.includes('erro') || t.includes('alerta') || t.includes('falha')) return 'alerta';
+            if (t.includes('ótimo') || t.includes('perfeito') || t.includes('excelente') || t.includes('sucesso') || t.includes('concluído')) return 'sucesso';
+            if (t.includes('analisando') || t.includes('calculando') || t.includes('hipótese') || t.includes('aguarde')) return 'pensativo';
+            if (t.includes('senhor') || t.includes('claro') || t.includes('óbvio') || t.includes('como desejar') || t.includes('naturalmente')) return 'sarcasmo';
+            return 'neutro';
+        }
+
+        async function consultarServidorNuvem(prompt) {
+            const res = await fetch("/api/jarvis", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ prompt })
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error || "Erro de comunicação com o servidor.");
+            }
+
+            const data = await res.json();
+            return data.response;
+        }
+
+        function falarResposta(texto) {
+            window.speechSynthesis.cancel();
+            
+            const emocao = detectarEmocaoNoTexto(texto);
+            aplicarEmocao(emocao);
+
+            const utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = 'pt-BR';
+            utterance.pitch = emocao === 'alerta' ? 0.42 : (emocao === 'sarcasmo' ? 0.48 : 0.55);
+            utterance.rate = 1.05;
+
+            if (jarvisVoice) utterance.voice = jarvisVoice;
+
+            const busto = document.getElementById('ironBust');
+            document.getElementById('speechStateVal').innerText = "FALANDO (ONLINE)...";
+
+            utterance.onstart = () => {
+                busto.classList.add('speaking');
+            };
+
+            utterance.onend = () => {
+                busto.classList.remove('speaking');
+                document.getElementById('speechStateVal').innerText = "STANDBY";
+                aplicarEmocao('neutro');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        async function processarMensagem(prompt) {
+            if (!prompt || !prompt.trim()) return;
+
+            document.getElementById('statusText').innerText = "ENVIANDO ORDEM À NUVEM...";
+            document.getElementById('responseLog').innerText = "Processando telemetria remota...";
+            aplicarEmocao('pensativo');
+
+            try {
+                const respostaIA = await consultarServidorNuvem(prompt);
+                document.getElementById('responseLog').innerText = respostaIA;
+                document.getElementById('statusText').innerText = "TRANSMISSÃO CONCLUÍDA";
+                document.getElementById('textPromptInput').value = "";
+                falarResposta(respostaIA);
+            } catch (err) {
+                document.getElementById('responseLog').innerText = "FALHA: " + err.message;
+                document.getElementById('statusText').innerText = "ERRO DE SERVIDOR";
+                aplicarEmocao('alerta');
+            }
+        }
+
+        function ativarReconhecimentoVoz() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Seu navegador não suporta reconhecimento de voz nativo.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.start();
+
+            document.getElementById('statusText').innerText = "ESCUTANDO COMANDO DE VOZ...";
+            aplicarEmocao('pensativo');
+
+            recognition.onresult = function(event) {
+                const promptTranscrito = event.results[0][0].transcript;
+                document.getElementById('statusText').innerText = "ORDEM CAPTURADA: " + promptTranscrito;
+                processarMensagem(promptTranscrito);
+            };
+
+            recognition.onerror = function() {
+                document.getElementById('statusText').innerText = "ERRO DE CAPTAÇÃO DE ÁUDIO";
+                aplicarEmocao('neutro');
+            };
+        }
+    </script>
+</body>
+</html>
